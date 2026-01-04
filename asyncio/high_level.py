@@ -2,6 +2,8 @@ import asyncio
 
 
 def test_asyncio_hello_world():
+    # The async def, as opposed to just a plain def,
+    # makes this an asynchronous function (or “coroutine function”)
     async def print_hello_world():
         print('Hello...')
         await asyncio.sleep(1)
@@ -66,13 +68,14 @@ def test_await_coroutine():
         task_b = asyncio.create_task(coro_b())
         for i in range(3):
             # awaiting a coroutine does not hand control back to the event loop
+            # await coroutine: 1、变成task 2、交出控制权 3、等到执行结果完成
             await coro_a()
         await task_b
 
-    asyncio.run(main=main())
+    asyncio.run(main=main(), debug=True)
 
 
-def test_await_coroutine_v2():
+def test_await_task_v2():
     async def coro_a():
         print("I am coro_a(). Hi!")
 
@@ -93,8 +96,8 @@ def test_await_coroutine_v2():
 def main():
     # test_asyncio_task()
     # test_await_task()
-    # test_await_coroutine()
-    test_await_coroutine_v2()
+    test_await_coroutine()
+    # test_await_task_v2()
 
 
 if __name__ == "__main__":
